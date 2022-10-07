@@ -9,14 +9,17 @@ public class Util {
     private static final String USER = "root";
     private static final String PASSWORD = "rootroot";
 
-    private Connection connection;
+    private  static Connection connection;
 
     public Connection getConnection() {
 
         try {
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
-           // connection.setAutoCommit(false);
+
+            connection.setAutoCommit(false);
+
             System.out.println("Connection OK");
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

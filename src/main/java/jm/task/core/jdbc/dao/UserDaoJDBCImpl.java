@@ -25,36 +25,55 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
 
     private final static String CLEAN_TABLE = "DELETE FROM USERS";
 
+    private Connection connection  = getConnection();
+
 
     public UserDaoJDBCImpl() {
 
     }
 //--------------------CREATE TABLE--------------------
     public void createUsersTable() {
-  try (Connection connection  = getConnection();
-       Statement stmt = connection.createStatement()) {
+
+  try (Statement stmt = connection.createStatement()) {
 
             stmt.executeUpdate(CREATE_TABLE);
+
+            connection.commit();
+
             System.out.println("Таблица USERS создана.");
 
         } catch (SQLException e) {
 
-            e.printStackTrace();
-        }
-    }
+      try {
+          connection.rollback();
+      } catch (SQLException ex) {
+          throw new RuntimeException(ex);
+      }
+
+
+  }
+
+}
 //--------------------DROP TABLE--------------------
 
     public void dropUsersTable() {
 
-        try (Connection connection = getConnection();
-             Statement stmt = connection.createStatement()) {
+        try (Statement stmt = connection.createStatement()) {
+
             stmt.executeUpdate(DROP_TABLE);
+
+            connection.commit();
+
             System.out.println("Таблица USERS удалена");
 
 
         } catch (SQLException e) {
 
-            e.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
 
         }
     }
@@ -63,8 +82,7 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
 //--------------------SAVE USER--------------------
     public void saveUser(String name, String lastName, byte age) {
 
-         try (Connection connection = getConnection();
-              PreparedStatement preparedStatement = connection.prepareStatement(SAVE_USER)){
+         try (PreparedStatement preparedStatement = connection.prepareStatement(SAVE_USER)){
 
 
             preparedStatement.setString(1, name );
@@ -74,24 +92,38 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
 
             preparedStatement.executeUpdate();
 
+             connection.commit();
+
 
         } catch (SQLException e){
-            e.printStackTrace();
-        }
+
+             try {
+                 connection.rollback();
+             } catch (SQLException ex) {
+                 throw new RuntimeException(ex);
+             }
+         }
 
     }
 
 //--------------------DELETE USER--------------------
     public void removeUserById(long id) {
 
-        try (Connection connection  = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_ID)){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE_ID)){
 
             preparedStatement.setLong(1, id);
             System.out.println("id № "+id+" удален из базы данных");
             preparedStatement.executeUpdate();
+
+            connection.commit();
+
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
         }
 
     }
@@ -102,8 +134,7 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
 
         List<User> userList = new ArrayList<>();
 
-        try (Connection connection  = getConnection();
-             Statement stmt = connection.createStatement()) {
+        try (Statement stmt = connection.createStatement()) {
 
             ResultSet resultSet = stmt.executeQuery(GET_ALL_USER);
 
@@ -115,10 +146,18 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
                 user.setAge(resultSet.getByte("AGE"));
                 userList.add(user);
 
+                connection.commit();
+
             }
 
         } catch (SQLException e) {
-        e.printStackTrace();
+
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+
         }
 
          return userList;
@@ -128,14 +167,19 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
 //--------------------CLEAN TABLE--------------------
     public void cleanUsersTable() {
 
-        try (Connection connection  = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(CLEAN_TABLE)){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(CLEAN_TABLE)){
 
             preparedStatement.executeUpdate();
+            connection.commit();
             System.out.println("Таблица USERS очищена.");
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
         }
 
     }
