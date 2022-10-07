@@ -111,7 +111,7 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
                 User user = new User();
                 user.setId(resultSet.getLong("ID"));
                 user.setName(resultSet.getString("NAME"));
-                user.setName(resultSet.getString("LASTNAME"));
+                user.setLastName(resultSet.getString("LASTNAME"));
                 user.setAge(resultSet.getByte("AGE"));
                 userList.add(user);
 
@@ -131,9 +131,9 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
         try (Connection connection  = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(CLEAN_TABLE)){
 
-
             preparedStatement.executeUpdate();
             System.out.println("Таблица USERS очищена.");
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
