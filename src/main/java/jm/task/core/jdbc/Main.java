@@ -13,18 +13,18 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
 
-      // UserService userService = new UserServiceImpl();
-       // userService.createUsersTable();
+        // UserService userService = new UserServiceImpl();
+        // userService.createUsersTable();
 
-      // userService.saveUser("Fox","Soup",(byte)100);
-     // userService.saveUser("Hell","Yes",(byte)16);
-      //userService.saveUser("Boy","No",(byte)62);
-       // userService.removeUserById(2);
-       // userService.dropUsersTable();
+        // userService.saveUser("Bob","Flow",(byte)100);
+        // userService.saveUser("Nick","Chick",(byte)16);
+        //userService.saveUser("Hell","Boy",(byte)62);
+        // userService.removeUserById(2);
 
-       // List<User> user = userService.getAllUsers();
-       // user.forEach(s -> System.out.println(s.getName()));
+        // List<User> user = userService.getAllUsers();
+        // user.forEach(s -> System.out.println(s.getName()));
         //userService.cleanUsersTable();
+        // userService.dropUsersTable();
 
 
     }
