@@ -36,7 +36,7 @@ public class UserDaoHibernateImpl extends Util implements UserDao {
     @Override
     public void createUsersTable() {
 
-        try (Session session = Util.getSessionFactory().openSession()) {
+        try (Session session = getSessionFactory().openSession()) {
 
             Transaction transaction = session.beginTransaction();
 
@@ -69,7 +69,7 @@ public class UserDaoHibernateImpl extends Util implements UserDao {
     @Override
     public void dropUsersTable() {
 
-        try (Session session = Util.getSessionFactory().openSession()) {
+        try (Session session = getSessionFactory().openSession()) {
 
             Transaction transaction = session.beginTransaction();
 
@@ -100,7 +100,7 @@ public class UserDaoHibernateImpl extends Util implements UserDao {
     @Override
     public void saveUser(String name, String lastName, byte age) {
 
-        try (Session session = Util.getSessionFactory().openSession()) {
+        try (Session session = getSessionFactory().openSession()) {
 
             transaction = session.beginTransaction();
 

@@ -29,7 +29,6 @@ public class Util {
 
         if (sessionFactory == null) {
             try {
-                Configuration configuration = new Configuration();
 
                 Properties settings = new Properties();
 
@@ -42,6 +41,7 @@ public class Util {
                 settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
                 settings.put(Environment.HBM2DDL_AUTO, "update");
 
+                Configuration configuration = new Configuration();
                 configuration.setProperties(settings);
                 configuration.addAnnotatedClass(User.class);
 
