@@ -61,7 +61,7 @@ public class Util {
     }
 
 //---------------------------------------------------
-    public Connection getConnection() {
+    public static Connection getConnection() {
 
         try {
             connection = DriverManager.getConnection(URL_U, USER_U, PASSWORD_U);
