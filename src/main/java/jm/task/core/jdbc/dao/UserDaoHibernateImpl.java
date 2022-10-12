@@ -198,7 +198,7 @@ public class UserDaoHibernateImpl extends Util implements UserDao {
 
             transaction = session.beginTransaction();
 
-            session.createSQLQuery("DELETE FROM USERS").executeUpdate();
+            session.createSQLQuery("DELETE FROM USERS" ).executeUpdate();
 
             System.out.println("Таблица USERS очищена.");
 
